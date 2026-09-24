@@ -1,3 +1,5 @@
+from datetime import date
+
 from src.comissao import (
     carregar_vendas,
     calcular_comissoes
@@ -8,6 +10,8 @@ from src.estoque import (
     buscar_produto,
     movimentar_estoque
 )
+
+from src.juros import calcular_juros
 
 
 def executar_comissao():
@@ -28,9 +32,9 @@ def executar_comissao():
 
 
 def executar_estoque():
-    print("\n" + "=" * 27)
+    print("\n" + "=" * 40)
     print("2 - MOVIMENTAÇÃO DE ESTOQUE")
-    print("=" * 27)
+    print("=" * 40)
 
     produtos = carregar_estoque(
         "data/estoque.json"
@@ -60,9 +64,49 @@ def executar_estoque():
     )
 
 
+def executar_juros():
+    print("\n" + "=" * 20)
+    print("3 - CÁLCULO DE JUROS")
+    print("=" * 20)
+
+    valor = 1000.00
+
+    data_vencimento = date(
+        2026,
+        9,
+        12
+    )
+
+    resultado = calcular_juros(
+        valor,
+        data_vencimento
+    )
+
+    print(
+        f"Valor original: "
+        f"R$ {valor:.2f}"
+    )
+
+    print(
+        f"Dias de atraso: "
+        f"{resultado['dias_atraso']}"
+    )
+
+    print(
+        f"Juros: "
+        f"R$ {resultado['juros']:.2f}"
+    )
+
+    print(
+        f"Valor total: "
+        f"R$ {resultado['valor_total']:.2f}"
+    )
+
+
 def main():
     executar_comissao()
     executar_estoque()
+    executar_juros()
 
 
 if __name__ == "__main__":
